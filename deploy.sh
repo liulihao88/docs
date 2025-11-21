@@ -20,5 +20,5 @@ git push -f https://github.com/liulihao88/docs.git main:github-pages
 # 提交所有代码到github
 cd ../../../
 git add .
-git cm -m 'update'
+git commit -m 'update'
 git push
