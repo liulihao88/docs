@@ -1,9 +1,9 @@
 import { defineConfig } from "vitepress";
 
 export default defineConfig({
-  title: `Front-end Notes`,
-  description: "前端笔记文档1111111111111111111",
-  base: "/front-end-notes/",
+  title: `Docs`,
+  description: "前端笔记文档",
+  base: "/docs/",
 
   head: [
     // 网站图标
@@ -18,19 +18,19 @@ export default defineConfig({
     logo: "/logo.svg",
 
     editLink: {
-      pattern: "https://github.com/themusecatcher/front-end-notes/tree/master/docs/:path",
+      pattern: "https://github.com/liulihao88/docs/tree/master/docs/:path",
       text: "Suggest changes to this page"
     },
     // 默认支持icon包括：'discord'|'facebook'|'github'|'instagram'|'linkedin'|'mastodon'|'slack'|'twitter'|'youtube'
     socialLinks: [
-      { icon: "github", link: "https://github.com/themusecatcher/front-end-notes" }
+      { icon: "github", link: "https://github.com/liulihao88/docs" },
       // 自定义icon
-      // {
-      //   icon: {
-      //     svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Dribbble</title><path d="M12...6.38z"/></svg>'
-      //   },
-      //   link: 'https://www.npmjs.com/package/front-end-notes'
-      // }
+      {
+        icon: {
+          svg: '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Dribbble</title><path d="M12...6.38z"/></svg>'
+        },
+        link: "https://www.npmjs.com/package/docs"
+      }
     ],
 
     // search: { // vitepress 内置 search
@@ -41,7 +41,7 @@ export default defineConfig({
       // algolia 搜索服务 与 内置 search 可二选一
       appId: "LPTNA0E8HM",
       apiKey: "8f1b68dfab6b0320adef728a1c3a77cc",
-      indexName: "themusecatcher_front-end"
+      indexName: "liulihao88_front-end"
     },
 
     footer: {
@@ -55,7 +55,7 @@ export default defineConfig({
       {
         text: "links",
         items: [
-          { text: "My Github", link: "https://github.com/themusecatcher" },
+          { text: "My Github", link: "https://github.com/liulihao88" },
           { text: "My CSDN", link: "https://blog.csdn.net/Dandrose?type=blog" },
           {
             items: [

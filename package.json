@@ -1,5 +1,5 @@
 {
-  "name": "front-end-notes",
+  "name": "docs",
   "version": "0.0.1",
   "scripts": {
     "docs:dev": "vitepress dev docs --open",
@@ -17,13 +17,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/liulihao88/front-end-notes"
+    "url": "git+https://github.com/liulihao88/docs"
   },
   "keywords": [
     "front-end",
     "notes"
   ],
-  "author": "themusecatcher",
+  "author": "liulihao88",
   "license": "ISC",
-  "homepage": "https://github.com/liulihao88/front-end-notes#readme"
+  "homepage": "https://github.com/liulihao88/docs#readme"
 }

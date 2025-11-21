@@ -1,1 +1,5 @@
-I want to set some random text, if you like it , please tell me. good wish for you! thank you so much. hive a nice day!
+# 1. 此项目目的
+
+```javascript
+我希望这个项目用来记录我的一些技术点;
+```

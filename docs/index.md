@@ -1,23 +1,23 @@
 ---
 layout: home
 
-title: Front-end Notes
+title: docs
 titleTemplate: Library
 
 hero:
-  name: Front-end Notes
+  name: docs
   text: ""
-  tagline: 前端笔记文档1112223334444555666777
+  tagline: 前端笔记文档
   image:
     src: /logo-with-shadow.png
-    alt: Front-end Notes
+    alt: docs
   actions:
     - theme: brand
       text: Get Started
       link: /vue2/note-1
     - theme: alt
       text: View on GitHub
-      link: https://github.com/liulihao88/front-end-notes
+      link: https://github.com/liulihao88/docs
 ---
 
 <script setup lang="ts">
