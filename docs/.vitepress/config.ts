@@ -51,7 +51,7 @@ export default defineConfig({
 
     nav: [
       { text: "技术点1", link: "/technology/note-1", activeMatch: "/technology/" },
-      { text: "面试题1", link: "/interview/note-1", activeMatch: "/interview/" },
+      // { text: "面试题1", link: "/interview/note-1", activeMatch: "/interview/" },
       {
         text: "links",
         items: [
@@ -124,31 +124,31 @@ export default defineConfig({
             }
           ]
         }
-      ],
-      "/interview/": [
-        {
-          text: "指引",
-          items: [
-            {
-              text: "开始",
-              link: "/interview/started"
-            }
-          ]
-        },
-        {
-          text: "面试题",
-          items: [
-            {
-              text: "note-1",
-              link: "/interview/note-1"
-            },
-            {
-              text: "note-2",
-              link: "/interview/note-2"
-            }
-          ]
-        }
       ]
+      // "/interview/": [
+      //   {
+      //     text: "指引",
+      //     items: [
+      //       {
+      //         text: "开始",
+      //         link: "/interview/started"
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     text: "面试题",
+      //     items: [
+      //       {
+      //         text: "note-1",
+      //         link: "/interview/note-1"
+      //       },
+      //       {
+      //         text: "note-2",
+      //         link: "/interview/note-2"
+      //       }
+      //     ]
+      //   }
+      // ]
     }
   }
 });
