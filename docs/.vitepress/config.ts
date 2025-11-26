@@ -50,21 +50,20 @@ export default defineConfig({
     },
 
     nav: [
-      { text: "Vue2 Notes", link: "/vue2/note-1", activeMatch: "/vue2/" },
-      { text: "Vue3 Notes", link: "/vue3/note-1", activeMatch: "/vue3/" },
+      { text: "技术点1", link: "/technology/note-1", activeMatch: "/technology/" },
+      { text: "面试题1", link: "/interview/note-1", activeMatch: "/interview/" },
       {
         text: "links",
         items: [
-          { text: "My Github", link: "https://github.com/liulihao88" },
-          { text: "My CSDN", link: "https://blog.csdn.net/Dandrose?type=blog" },
+          { text: "Github", link: "https://github.com/liulihao88" },
           {
             items: [
               {
-                text: "Vue 2 Docs",
+                text: "技术点",
                 link: "https://v2.cn.vuejs.org/v2/guide/"
               },
               {
-                text: "Vue 3 Docs",
+                text: "面试题",
                 link: "https://cn.vuejs.org/guide/introduction.html"
               },
               {
@@ -102,50 +101,50 @@ export default defineConfig({
     ],
 
     sidebar: {
-      "/vue2/": [
+      "/technology/": [
         {
           text: "指引",
           items: [
             {
               text: "开始",
-              link: "/vue2/started"
+              link: "/technology/started"
             }
           ]
         },
         {
-          text: "Vue2 Notes",
+          text: "技术点",
           items: [
             {
               text: "note-1",
-              link: "/vue2/note-1"
+              link: "/technology/note-1"
             },
             {
               text: "note-2",
-              link: "/vue2/note-2"
+              link: "/technology/note-2"
             }
           ]
         }
       ],
-      "/vue3/": [
+      "/interview/": [
         {
           text: "指引",
           items: [
             {
               text: "开始",
-              link: "/vue3/started"
+              link: "/interview/started"
             }
           ]
         },
         {
-          text: "Vue3 Notes",
+          text: "面试题",
           items: [
             {
               text: "note-1",
-              link: "/vue3/note-1"
+              link: "/interview/note-1"
             },
             {
               text: "note-2",
-              link: "/vue3/note-2"
+              link: "/interview/note-2"
             }
           ]
         }

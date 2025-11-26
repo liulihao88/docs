@@ -9,14 +9,14 @@ hero:
   text: ""
   tagline: 前端笔记文档
   image:
-    src: /logo-with-shadow.png
+    src: /img/logo.svg
     alt: docs
   actions:
     - theme: brand
-      text: Get Started
+      text: 开始
       link: /vue2/note-1
     - theme: alt
-      text: View on GitHub
+      text: 在GitHub查看
       link: https://github.com/liulihao88/docs
 ---
 
