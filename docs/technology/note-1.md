@@ -108,10 +108,10 @@ apply(thisArg, [arg1, arg2, ...]): 接收一个参数数组。
  * @param {Array<any>} args 传递给函数的参数数组
  * @returns {*} 函数调用的返回值
  */
-Function.prototype.myApply = function(context, args) {
+Function.prototype.myApply = function (context, args) {
   // 1. 如果 myApply 不是在函数上调用，则报错
-  if (typeof this !== 'function') {
-    throw new TypeError('myApply must be called on a function');
+  if (typeof this !== "function") {
+    throw new TypeError("myApply must be called on a function");
   }
 
   // 2. 处理 context 为 null 或 undefined 的情况，将其指向全局对象
@@ -120,16 +120,16 @@ Function.prototype.myApply = function(context, args) {
     // 如果 args 未提供或为 null/undefined，我们将其视为一个空数组
     args = [];
   }
-  if (!Array.isArray(args) && typeof args.length !== 'number') {
+  if (!Array.isArray(args) && typeof args.length !== "number") {
     // 如果 args 不是数组且没有 length 属性，也视为空数组
     // 这是为了模拟原生 apply 在第二个参数不是类数组对象时的行为
     args = [];
   }
-  
-  const ctx = context || (typeof window !== 'undefined' ? window : globalThis);
+
+  const ctx = context || (typeof window !== "undefined" ? window : globalThis);
 
   // 3. 创建一个唯一的属性名，以避免覆盖 ctx 上原有的属性
-  const fnKey = Symbol('apply_key');
+  const fnKey = Symbol("apply_key");
 
   // 4. 将当前函数（this）作为 ctx 的一个临时方法
   ctx[fnKey] = this;
@@ -143,70 +143,68 @@ Function.prototype.myApply = function(context, args) {
   // 7. 返回函数调用的结果
   return result;
 };
-
 ```
 
 测试用例
 
 ```javascript
-
 // --- 测试用例 ---
 
 // 1. 普通对象
 const person = {
-  name: 'Alice',
+  name: "Alice",
   greet: function (greeting) {
-    console.log(`73 greeting`, greeting)
-    return `${greeting[0]}, I am ${this.name}${greeting[1]}`
-  },
-}
+    console.log(`73 greeting`, greeting);
+    return `${greeting[0]}, I am ${this.name}${greeting[1]}`;
+  }
+};
 
-const bob = { name: 'Bob' }
+const bob = { name: "Bob" };
 
 // 使用 myApply 调用 person.greet, 传递参数数组
-const greetingFromBob = person.greet.myApply(bob, ['Hello', '!'])
-console.log(greetingFromBob) // 输出: "Hello, I am Bob!"
+const greetingFromBob = person.greet.myApply(bob, ["Hello", "!"]);
+console.log(greetingFromBob); // 输出: "Hello, I am Bob!"
 
 // 2. 没有传递参数 args
 const sayName = function () {
-  return this.name
-}
-const name = sayName.myApply(bob)
-console.log(name) // 输出: "Bob"
+  return this.name;
+};
+const name = sayName.myApply(bob);
+console.log(name); // 输出: "Bob"
 
 // 3. 传入的函数没有返回值
 const logThis = function () {
-  console.log('this inside logThis is:', this)
-}
-logThis.myApply({ id: 123 }) // 输出: "this inside logThis is: { id: 123 }"
-console.log(logThis.myApply({ id: 123 })) // 输出: undefined
+  console.log("this inside logThis is:", this);
+};
+logThis.myApply({ id: 123 }); // 输出: "this inside logThis is: { id: 123 }"
+console.log(logThis.myApply({ id: 123 })); // 输出: undefined
 
 // 4. 确保 ctx 对象未被污染
-const cleanObj = { a: 1, b: 2 }
-;(function () {}).myApply(cleanObj, ['test'])
-console.log(cleanObj) // 输出: { a: 1, b: 2 }
+const cleanObj = { a: 1, b: 2 };
+(function () {}).myApply(cleanObj, ["test"]);
+console.log(cleanObj); // 输出: { a: 1, b: 2 }
 
 // 5. **关键测试**: 处理 args 为 null/undefined 的情况
 const returnArgs = function () {
   console.log(`27 arguments`, arguments);
-  return arguments // 返回一个 Arguments 对象 (类数组)
-}
-const nullArgsResult = returnArgs.myApply(null, null)
-console.log(`27 nullArgsResult.length`, nullArgsResult.length)
+  return arguments; // 返回一个 Arguments 对象 (类数组)
+};
+const nullArgsResult = returnArgs.myApply(null, null);
+console.log(`27 nullArgsResult.length`, nullArgsResult.length);
 
-const undefinedArgsResult = returnArgs.myApply(null, undefined)
-console.log(undefinedArgsResult.length) // 输出: 1
+const undefinedArgsResult = returnArgs.myApply(null, undefined);
+console.log(undefinedArgsResult.length); // 输出: 1
 
 // 6. **关键测试**: 处理 args 为非数组对象的情况 (但有 length)
 // 模拟了一个类数组对象
-const pseudoArgs = { 0: 'Hi', 1: 'there', length: 2 }
-const pseudoArrayResult = person.greet.myApply(bob, pseudoArgs)
-console.log(pseudoArrayResult) // 输出: "Hi, I am Bobthere"
+const pseudoArgs = { 0: "Hi", 1: "there", length: 2 };
+const pseudoArrayResult = person.greet.myApply(bob, pseudoArgs);
+console.log(pseudoArrayResult); // 输出: "Hi, I am Bobthere"
 
 // 7. **关键测试**: 处理 args 为非数非类数组对象的情况
-const invalidArgs = { prop: 'value' }
-const invalidArgsResult = person.greet.myApply(bob, invalidArgs)
-console.log(invalidArgsResult) // 应该等同于没有传参，所以输出: "undefined, I am Bobundefined"
+const invalidArgs = { prop: "value" };
+const invalidArgsResult = person.greet.myApply(bob, invalidArgs);
+console.log(invalidArgsResult); // 应该等同于没有传参，所以输出: "undefined, I am Bobundefined"
 // 或者更精确地处理，根据我们代码的逻辑，args 会被设为 []，所以：
 // 输出: "undefined, I am Bobundefined" （因为 greeting 和 punctuation 都是 undefined）
 // 修改我们的代码，如果 args 无效，直接当空数组用：
@@ -214,7 +212,94 @@ console.log(invalidArgsResult) // 应该等同于没有传参，所以输出: "u
 // args = Array.isArray(args) ? args : [];
 // 那么这里就会输出 "undefined, I am Bobundefined"
 // 我们现在的代码会将其变为空数组, 所以结果是:
-console.log('---')
-console.log(person.greet.myApply(bob, invalidArgs)) // 将输出 "undefined, I am Bobundefined"
-console.log(person.greet.myApply(bob, {})) // 将输出 "undefined, I am Bobundefined"
+console.log("---");
+console.log(person.greet.myApply(bob, invalidArgs)); // 将输出 "undefined, I am Bobundefined"
+console.log(person.greet.myApply(bob, {})); // 将输出 "undefined, I am Bobundefined"
+```
+
+## 3. 手写 bind 函数
+
+下面是一个基础版本的 bind 函数实现：
+
+```javascript
+function myBind(context, ...args1) {
+  // 调用 bind 的函数
+  const fn = this;
+
+  // 返回一个新函数
+  return function (...args2) {
+    // 判断是否作为构造函数使用
+    if (new.target) {
+      // 如果是 new 调用，则忽略传入的 context
+      return new fn(...args1, ...args2);
+    } else {
+      // 普通函数调用，使用指定的 this 和参数
+      return fn.apply(context, [...args1, ...args2]);
+    }
+  };
+}
+```
+
+下面是一个基础版本的 bind 函数实现：
+
+```javascript
+Function.prototype.myBind = function (context, ...args1) {
+  // 如果不是函数，抛出错误
+  if (typeof this !== 'function') {
+    throw new TypeError('myBind must be called on a function')
+  }
+
+  const fn = this
+
+  const boundFn = function (...args2) {
+    // 合并参数
+    const finalArgs = [...args1, ...args2]
+
+    // 处理 new 调用
+    if (new.target) {
+      // 使用 Object.create 避免修改原函数的 prototype
+      const obj = Object.create(fn.prototype)
+      const result = fn.apply(obj, finalArgs)
+      // 如果函数返回了一个对象，则返回该对象，否则返回新创建的实例
+      return result !== null && (typeof result === 'object' || typeof result === 'function') ? result : obj
+    }
+
+    // 处理 this 为 null 或 undefined 的情况
+    const ctx = context || globalThis
+    
+    return fn.apply(ctx, finalArgs)
+  }
+
+  // 保持原型链
+  boundFn.prototype = Object.create(fn.prototype)
+  // 确保构造函数指向正确
+  boundFn.prototype.constructor = boundFn
+
+  return boundFn
+}
+```
+
+测试用例
+
+```javascript
+// 测试用例
+function Person(name, age) {
+  this.name = name
+  this.age = age
+}
+Person.prototype.sayHello = function () {
+  console.log(`Hello, I'm ${this.name}`)
+}
+const person1 = new Person('Alice', 25)
+const sayHello = person1.sayHello.myBind(person1)
+sayHello() // Hello, I'm Alice
+const person2 = new Person('Bob', 30)
+const greet = person1.sayHello.myBind(person2)
+greet() // Hello, I'm Bob
+// 测试 new 调用
+const BoundPerson = Person.myBind(null, 'Charlie')
+const charlie = new BoundPerson(28)
+console.log(charlie.name) // Charlie
+console.log(charlie.age) // 28
+charlie.sayHello() // Hello, I'm Charlie
 ```
