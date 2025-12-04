@@ -2,9 +2,8 @@ import { defineConfig } from "vitepress";
 
 export default defineConfig({
   title: `Docs`,
-  description: "前端笔记文档",
+  description: "andy凌雲-前端笔记文档",
   base: "/docs/",
-
   head: [
     // 网站图标
     ["link", { rel: "icon", type: "image/svg+xml", href: "logo.svg" }]
@@ -50,7 +49,7 @@ export default defineConfig({
     },
 
     nav: [
-      { text: "技术点1", link: "/technology/note-1", activeMatch: "/technology/" },
+      { text: "技术点", link: "/technology/handwriting", activeMatch: "/technology/" },
       // { text: "面试题1", link: "/interview/note-1", activeMatch: "/interview/" },
       {
         text: "links",
@@ -115,8 +114,8 @@ export default defineConfig({
           text: "技术点",
           items: [
             {
-              text: "note-1",
-              link: "/technology/note-1"
+              text: "手写方法",
+              link: "/technology/handwriting"
             },
             {
               text: "note-2",
@@ -125,30 +124,6 @@ export default defineConfig({
           ]
         }
       ]
-      // "/interview/": [
-      //   {
-      //     text: "指引",
-      //     items: [
-      //       {
-      //         text: "开始",
-      //         link: "/interview/started"
-      //       }
-      //     ]
-      //   },
-      //   {
-      //     text: "面试题",
-      //     items: [
-      //       {
-      //         text: "note-1",
-      //         link: "/interview/note-1"
-      //       },
-      //       {
-      //         text: "note-2",
-      //         link: "/interview/note-2"
-      //       }
-      //     ]
-      //   }
-      // ]
     }
   }
 });

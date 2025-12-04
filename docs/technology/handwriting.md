@@ -303,3 +303,105 @@ console.log(charlie.name) // Charlie
 console.log(charlie.age) // 28
 charlie.sayHello() // Hello, I'm Charlie
 ```
+
+## 4. 自己实现一个Promise.all的函数
+
+```javascript
+/**
+ * 自己实现的 Promise.all
+ * @param {Promise[]} promises 一个包含 Promise 实例的数组
+ * @returns {Promise} 返回一个新的 Promise
+ */
+function myPromiseAll(promises) {
+  // 1. 验证输入，确保传进来的是一个可迭代的对象（如数组）
+  if (!promises || typeof promises[Symbol.iterator] !== 'function') {
+    return Promise.reject(new TypeError('promises must be an iterable.'))
+  }
+
+  // 2. 创建一个结果数组，用于存储所有 Promise 的结果
+  const results = []
+  // 3. 创建一个计数器，用于追踪已经成功完成的 Promise 的数量
+  let resolvedCount = 0
+  // 4. 获取数组的长度，避免每次循环都计算
+  const promisesLength = promises.length
+  console.log(`07 promisesLength`, promisesLength);
+
+  // 5. 创建并返回一个新的 Promise，这是 Promise.all 的核心
+  return new Promise((resolve, reject) => {
+    // 遍历传入的 Promise 数组
+    for (let i = 0; i < promisesLength; i++) {
+      // 使用 .then 来处理每个 Promise 的结果
+      // 为了保护代码，确保每个 item 都是 Promise 对象
+      const item = promises[i]
+      Promise.resolve(item).then(
+        // 成功回调
+        (value) => {
+          // 将成功的结果存入 results 数组的对应位置
+          // 这保证了结果顺序与输入顺序一致
+          results[i] = value
+
+          // 每当一个 Promise 成功，计数器加一
+          resolvedCount++
+
+          // 6. 关键：检查是否所有 Promise 都已完成
+          // 当计数器与数组长度相等时，说明所有 Promise 都已成功
+          if (resolvedCount === promisesLength) {
+            // 执行外层 Promise 的 resolve，并传递结果数组
+            resolve(results)
+          }
+        },
+        // 失败回调
+        (reason) => {
+          // 如果任何一个 Promise 失败，立即执行外层 Promise 的 reject
+          // 并且**不再**处理其他 Promise 的结果
+          reject(reason)
+        },
+      )
+    }
+  })
+}
+```
+
+测试用例
+
+```javascript
+
+// 测试用例 1: 所有的 Promise 都成功
+const p1 = Promise.resolve(1);
+const p2 = new Promise((resolve) => setTimeout(() => resolve(2), 100));
+const p3 = Promise.resolve(3);
+
+myPromiseAll([p1, p2, p3])
+  .then((results) => {
+    console.log('测试1 - 成功:', results); // 预期输出: [1, 2, 3]
+  })
+  .catch((err) => {
+    console.error('测试1 - 失败:', err);
+  });
+
+// 测试用例 2: 混合成功与失败
+const p4 = Promise.resolve(4);
+const p5 = new Promise((_, reject) => setTimeout(() => reject('Oops, p5 failed!'), 50));
+const p6 = Promise.resolve(6);
+
+myPromiseAll([p4, p5, p6])
+  .then((results) => {
+    console.log('测试2 - 成功:', results); // 这行不应该被执行
+  })
+  .catch((err) => {
+    console.error('测试2 - 失败:', err); // 预期输出: "Oops, p5 failed!"
+  });
+
+// 测试用例 3: 快速失败的情况 (失败的 Promise 比 Promise.all 执行还快)
+const p7 = Promise.resolve(7);
+const p8 = Promise.reject('p8 is rejected immediately');
+const p9 = Promise.resolve(9);
+
+myPromiseAll([p7, p8, p9])
+  .then((results) => {
+    console.log('测试3 - 成功:', results);
+  })
+  .catch((err) => {
+    console.error('测试3 - 失败:', err); // 预期输出: "p8 is rejected immediately"
+  });
+```
